@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinyl Player</title>
+    <link rel="stylesheet" href="vinyl_player.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+    <div id="settings-button" onclick="toggleSettings()">
+        <i class="fas fa-cog"></i> <!-- Ícono de configuración -->
+    </div>
+
+    <div id="settings-panel">
+        <div class="settings-header">
+            <h2>Ajustes</h2>
+            <i id="close-settings" class="fas fa-times" onclick="closeSettings()"></i>
+        </div>
+        <label for="fontSelect">Fuente:</label>
+        <select id="fontSelect" onchange="changeFont()">
+            <option value="Arial, sans-serif" style="font-family: 'Arial', sans-serif;">Arial</option>
+            <option value="Tiny5, sans-serif" style="font-family: 'Tiny5', sans-serif;">Tiny5</option>
+            <option value="Courier New, monospace" style="font-family: 'Courier New', monospace;">Courier New</option>
+            <option value="Georgia, serif" style="font-family: 'Georgia', serif;">Georgia</option>
+            <option value="Verdana, sans-serif" style="font-family: 'Verdana', sans-serif;">Verdana</option>
+            <option value="Oxanium, sans-serif" style="font-family: 'Oxanium', sans-serif;">Oxanium</option>
+        </select>
+
+        <!-- Control de Volumen -->
+        <label for="volumeControl">Volumen:</label>
+        <input type="range" id="volumeControl" min="0" max="100" value="100" oninput="changeVolume(this.value)">
+        <button id="saveSettingsButton" onclick="saveSettings()">Guardar ajustes</button>
+    </div>
+
+    <div class="container">
+        <div class="vinyl-box" id="vinylBox"></div>
+        <div class="vinyl" id="vinyl">
+            <div class="vinyl-label" id="vinylLabel"></div>
+        </div>
+    </div>
+
+    <audio id="audioPlayer">
+        <source src="" type="audio/mpeg">
+    </audio>
+
+    <div id="currentSongTitle" class="song-title">Playing: none</div>
+
+    <div class="controls">
+        <button id="prevSongButton" class="icon-button"><i class="fas fa-step-backward"></i></button>
+        <button id="pauseButton" class="icon-button"><i class="fas fa-pause" id="playIcon"></i></button>
+        <button id="nextSongButton" class="icon-button"><i class="fas fa-step-forward"></i></button>
+        <button id="loadPlaylistButton" class="icon-button"><i class="fas fa-arrow-circle-down"></i></button>
+    </div>
+
+    <input type="text" id="playlistUrl" placeholder="Introduce el enlace de la playlist de Spotify">
+
+    <script src="vinyl_player.js"></script>
+
+</body>
+</html>

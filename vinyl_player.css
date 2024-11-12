@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Tiny5&display=swap');
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(180deg, #e8e8e8 30%, #cdcdcd 70%, #a7a7a7 100%);
+            margin: 0;
+            background-attachment: fixed;
+        }
+
+        .container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .vinyl-box {
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            position: absolute;
+            cursor: pointer;
+            transition: transform 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            box-shadow: #2c2c2c;
+        }
+
+        .vinyl {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, #333 10%, #000 50%, #000 100%);
+            position: absolute;
+            left: 0;
+            animation: spin 3s linear infinite;
+            z-index: 1;
+            transition: left 1.5s ease-in-out;
+        }
+
+        .vinyl.active {
+            left: 115px;
+        }
+
+        .vinyl-box.active {
+            transform: translateX(-105px);
+        }
+
+        .vinyl::before {
+            content: "";
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, var(--vinyl-center-color, #d81b1b) 30%, #a41a1a 70%, #fff 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .vinyl::after {
+            content: "";
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: repeating-radial-gradient(circle, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05) 5px, transparent 5px, transparent 10px);
+        }
+
+        .vinyl-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: transparent;
+        }
+
+        audio {
+            margin-top: 20px;
+            width: 300px;
+        }
+
+        .icon-button {
+            background: none;
+            border: none;
+            color: #000000;
+            font-size: 15px;
+            cursor: pointer;
+            transition: color 0.3s;
+            position: relative;
+            z-index: 3;
+            margin: 0 20px;
+        }
+
+        .icon-button:hover {
+            color: #4a4a4a;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        #playlistUrl {
+            visibility: hidden;
+            /* El elemento no es visible en la página, pero ocupa espacio. */
+            opacity: 0;
+            /* El elemento es completamente transparente (invisible visualmente). */
+            width: 350px;
+            /* Ancho fijo del elemento de 350 píxeles. */
+            margin-top: 30px;
+            /* Espaciado de 30 píxeles en la parte superior del elemento. */
+            margin-bottom: 10px;
+            /* Espaciado de 10 píxeles en la parte inferior del elemento. */
+            padding: 10px 15px;
+            /* Espaciado interno: 10 píxeles arriba y abajo, 15 píxeles a los lados. */
+            font-size: 13px;
+            /* Tamaño de la fuente del texto dentro del elemento es de 13 píxeles. */
+            color: #2b2b2b;
+            /* Color del texto en el elemento, un tono oscuro (casi negro). */
+            background-color: #f5e6cc73;
+            /* Color de fondo del elemento, un tono claro con cierta transparencia (73% opaco). */
+            border: 2px solid #8a7f8d;
+            /* Borde sólido de 2 píxeles de grosor en un color gris oscuro. */
+            border-radius: 0px;
+            /* Esquinas redondeadas del borde del elemento con un radio de 8 píxeles. */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            /* Sombra del cuadro, desplazada 0 píxeles en el eje X, 4 píxeles en el eje Y, con un desenfoque de 8 píxeles y color negro con 15% de opacidad. */
+            transition: visibility 0s, opacity 0.3s ease, transform 0.3s ease;
+            /* Transiciones suaves para las propiedades: 
+        - `visibility` cambia inmediatamente sin tiempo de transición, 
+        - `opacity` cambia durante 0.3 segundos con una función de tiempo 'ease', 
+        - `transform` también cambia durante 0.3 segundos con una función de tiempo 'ease'. */
+            transform: scale(0.95);
+            /* El elemento se escala al 95% de su tamaño original. */
+        }
+
+
+        /* Mostrar el campo de entrada con opacidad y expansión suave cuando esté visible */
+        #playlistUrl.visible {
+            visibility: visible;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Estilo para cuando el campo de entrada está en foco */
+        #playlistUrl:focus {
+            outline: none;
+            border-color: #8a7f8d;
+            box-shadow: 0 4px 12px rgba(138, 127, 141, 0.3);
+            background-color: #fff1e3;
+        }
+
+
+        .song-title {
+            font-size: 13px;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #close-settings {
+            font-size: 20px;
+            cursor: pointer;
+            color: #888;
+            transition: color 0.3s ease;
+        }
+
+        #close-settings:hover {
+            color: #000;
+        }
+
+        #settings-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #333;
+            background: none;
+            padding: 0;
+            transition: color 0.3s ease, transform 0.3s ease;
+            /* Aplicar la fuente Tiny5 */
+        }
+
+        #settings-button:hover {
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        #settings-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            padding: 20px;
+            background-color: #f4f4f9;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
+            /* Aplicar la fuente Tiny5 */
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            /* Aplicar la fuente Tiny5 */
+        }
+
+        #settings-panel h2 {
+            margin: 0;
+            font-size: 20px;
+            /* Aplicar la fuente Tiny5 */
+        }
+
+        #fontSelect {
+            padding: 5px;
+            margin-top: 10px;
+            width: 100%;
+            font-size: 16px;
+            /* Tamaño de la fuente */
+            border: 1px solid #ccc;
+            /* Borde del select */
+            border-radius: 4px;
+            /* Bordes redondeados del select */
+        }
+
+
+        #saveSettingsButton {
+            padding: 8px 12px;
+            margin-top: 15px;
+            width: 100%;
+            font-size: 16px;
+            background-color: #858985;
+            /* Verde */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #saveSettingsButton:hover {
+            background-color: #595959;
+        }
+
+        #volumeControl {
+            width: 100%;
+            /* Ajuste del ancho del control de volumen */
+            margin: 10px 0;
+        }
+
+        /* Margen superior para el label de volumen */
+        label[for="volumeControl"] {
+            margin-top: 20px;
+            display: block;
+        }
